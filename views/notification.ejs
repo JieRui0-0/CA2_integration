@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notifications</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+    header { background:#007BFF; padding:15px; display:flex; justify-content:space-between; align-items:center; }
+    header h2 { color:white; margin:0; }
+    header nav a { color:white; margin-right:20px; text-decoration:none; }
+    header nav span { color:white; margin-right:20px; }
+    header nav a:hover { text-decoration: underline; }
+    .container { max-width: 800px; margin: 40px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h1 { color: #007BFF; text-align:center; }
+    .notification { padding: 10px; border-bottom: 1px solid #ccc; }
+    .notification.unread { font-weight: bold; }
+    .actions a { margin-left: 10px; color: #007BFF; text-decoration: none; }
+    .actions a:hover { text-decoration: underline; }
+    form { margin-bottom: 20px; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+    form select, form input { padding: 8px; }
+    form button { padding: 8px 16px; background:#007BFF; color:white; border:none; border-radius:4px; cursor:pointer; }
+    form button:hover { background:#0056b3; }
+    .flash { text-align:center; margin:10px; }
+    .flash .success { color: green; }
+    .flash .error { color: red; }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>SG Community</h2>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/leaderboard">Leaderboard</a>
+      <a href="/notifications">Notifications</a>
+      <span>Hi, <%= user.username %> (<%= user.role %>)</span>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Notifications</h1>
+
+    <div class="flash">
+      <% if (messages && messages.length > 0) { %>
+        <% messages.forEach(msg => { %>
+          <div class="success"><%= msg %></div>
+        <% }) %>
+      <% } %>
+      <% if (errors && errors.length > 0) { %>
+        <% errors.forEach(err => { %>
+          <div class="error"><%= err %></div>
+        <% }) %>
+      <% } %>
+    </div>
+
+    <% if (user.role === 'admin') { %>
+      <form action="/notifications/create" method="POST" onsubmit="return confirmBroadcast()">
+        <select name="user_id" required>
+          <option value="all">All Users</option>
+          <% users.forEach(u => { %>
+            <option value="<%= u.id %>"><%= u.username %></option>
+          <% }) %>
+        </select>
+
+        <input type="text" name="message" placeholder="Notification message" required>
+
+        <select name="type">
+          <option value="event">Event</option>
+          <option value="badge">Badge</option>
+          <option value="leaderboard">Leaderboard</option>
+          <option value="system">System</option>
+        </select>
+
+        <button type="submit">Send Notification</button>
+      </form>
+    <% } %>
+
+    <% if (notifications.length > 0) { %>
+      <% notifications.forEach(note => { %>
+        <div class="notification <%= note.status %>">
+          <p><%= note.message %></p>
+          <% if (user.role === 'admin') { %>
+            <small>To: <%= note.username %> | Type: <%= note.type %> | Status: <%= note.status %> | Date: <%= note.create_at %></small>
+          <% } else { %>
+            <small>Type: <%= note.type %> | Status: <%= note.status %> | Date: <%= note.create_at %></small>
+          <% } %>
+          <div class="actions">
+            <% if (note.status === 'unread' && user.role !== 'admin') { %>
+              <a href="/notifications/<%= note.id %>/read">Mark as Read</a>
+            <% } %>
+            <% if (user.role === 'admin') { %>
+              <a href="/notifications/<%= note.id %>/edit">Edit</a>
+              <a href="/notifications/<%= note.id %>/delete" onclick="return confirm('Delete notification?');">Delete</a>
+            <% } %>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>No notifications found.</p>
+    <% } %>
+  </div>
+
+  <script>
+    function confirmBroadcast() {
+      const select = document.querySelector('select[name="user_id"]');
+      if (select.value === 'all') {
+        return confirm('Are you sure you want to send this notification to ALL users?');
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>
+

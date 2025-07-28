@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Events</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background-color: #e0f7fa;">
+    <div class="container mt-5">
+        <h1 class="text-center mb-3">Community Events</h1>
+        <p class="text-center">Connect, engage, and make a difference. Join our community events and be part of something bigger!</p>
+
+        <% if (messages.length > 0) { %>
+            <% messages.forEach(msg => { %>
+                <div class="alert alert-danger"><%= msg %></div>
+            <% }) %>
+        <% } %>
+
+        <form method="GET" action="/events" class="mb-4 d-flex justify-content-center">
+            <input type="text" name="search" placeholder="Search events..." value="<%= search %>" class="form-control w-50 me-2">
+            <button type="submit" class="btn btn-info">Search</button>
+        </form>
+
+        <% if (events.length > 0) { %>
+            <div class="row">
+                <% events.forEach(event => { %>
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow">
+                            <div class="card-header bg-info text-white">
+                                <%= event.name %>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Date:</strong> <%= event.date %></p>
+                                <p><strong>Location:</strong> <%= event.location %></p>
+                                <p><strong>Description:</strong> <%= event.description %></p>
+
+                                <% if (user && user.role === 'admin') { %>
+                                    <a href="/events/edit/<%= event.id %>" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="/events/delete/<%= event.id %>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this event?')">Delete</a>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <p class="text-center">No events found.</p>
+        <% } %>
+
+        <% if (user && user.role === 'admin') { %>
+            <div class="text-center mt-4">
+                <a href="/events/add" class="btn btn-success">Add New Event</a>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>
+
+
+

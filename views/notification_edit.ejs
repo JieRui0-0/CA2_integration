@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Notification</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+    header { background:#007BFF; padding:15px; display:flex; justify-content:space-between; align-items:center; }
+    header h2 { color:white; margin:0; }
+    header nav a { color:white; margin-right:20px; text-decoration:none; }
+    header nav span { color:white; margin-right:20px; }
+    header nav a:hover { text-decoration: underline; }
+    .container { width: 50%; margin: 40px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h1 { text-align: center; color: #007BFF; }
+    label { display: block; margin: 10px 0 5px; }
+    input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+    button { margin-top: 15px; padding: 10px 20px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>SG Community</h2>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/leaderboard">Leaderboard</a>
+      <a href="/notifications">Notifications</a>
+      <span>Hi, <%= user.username %> (<%= user.role %>)</span>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Edit Notification</h1>
+    <form action="/notifications/<%= notification.id %>/edit" method="POST">
+      <label>Message:</label>
+      <input type="text" name="message" required value="<%= notification.message %>">
+
+      <label>Type:</label>
+      <select name="type">
+        <option value="event" <%= notification.type === 'event' ? 'selected' : '' %>>Event</option>
+        <option value="badge" <%= notification.type === 'badge' ? 'selected' : '' %>>Badge</option>
+        <option value="leaderboard" <%= notification.type === 'leaderboard' ? 'selected' : '' %>>Leaderboard</option>
+        <option value="system" <%= notification.type === 'system' ? 'selected' : '' %>>System</option>
+      </select>
+
+      <label>Status:</label>
+      <select name="status">
+        <option value="unread" <%= notification.status === 'unread' ? 'selected' : '' %>>Unread</option>
+        <option value="read" <%= notification.status === 'read' ? 'selected' : '' %>>Read</option>
+      </select>
+
+      <button type="submit">Update Notification</button>
+    </form>
+  </div>
+</body>
+</html>
+
+

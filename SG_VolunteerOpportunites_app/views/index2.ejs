@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SG Community & Leaderboard</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- AOS (Animate on Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f8;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #007bff, #00c6ff);
+            padding: 25px 20px;
+            color: white;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: #ffffffdd;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #fff;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+            position: relative;
+            background: url('https://www.transparenttextures.com/patterns/white-wall-3.png');
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #007acc;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .search-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .search-container input[type="search"] {
+            padding: 12px 18px;
+            border: 2px solid #007acc;
+            border-radius: 30px;
+            font-size: 1rem;
+            width: 280px;
+        }
+
+        .search-container button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(to right, #1e90ff, #00c6ff);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .buttons {
+            margin-top: 30px;
+        }
+
+        .btn {
+            margin: 10px 15px;
+            padding: 14px 30px;
+            border-radius: 30px;
+            background: linear-gradient(to right, #007acc, #00c6ff);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 5px 10px rgba(0, 122, 204, 0.3);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .stats {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .stats h3 {
+            font-size: 1.4rem;
+            color: #222;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 60px 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            width: 280px;
+            text-align: center;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 60px;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            background: #e7f0ff;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        footer a {
+            margin: 0 10px;
+            color: #007acc;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #005c99;
+        }
+
+        @media (max-width: 600px) {
+            .cards {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to SG Community & Leaderboard</h1>
+        <nav>
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+            <a href="#">Leaderboard</a>
+            <a href="/sg__volunteer_opportunities">Opportunities</a>
+            <a href="/sg_announcements">Announcements</a>
+        </nav>
+    </header>
+    <section class="hero" data-aos="fade-up">
+        <h1>Engage. Contribute. Be Recognized.</h1>
+        <p>This platform encourages community engagement and showcases top contributors through a dynamic leaderboard
+            system.</p>
+        <div class="search-container">
+            <input type="search" placeholder="Search the community or leader...">
+            <button type="submit">Search</button>
+        </div>
+        <div class="buttons">
+            <a href="#" class="btn">Get Started</a>
+            <a href="#" class="btn">View Leaderboard</a>
+        </div>
+    </section>
+
+    <section class="stats" data-aos="zoom-in">
+        <h3><i class="fas fa-trophy"></i> 500+ Active Contributors</h3>
+        <p>Join a growing community making a difference!</p>
+    </section>
+
+    <section class="cards">
+        <div class="card" data-aos="fade-up">
+            <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Icon">
+            <h4>Top Contributors</h4>
+            <p>Highlight those making a real impact.</p>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
+            <img src="https://cdn-icons-png.flaticon.com/512/8832/8832209.png" alt="Icon">
+            <h4>Easy Registration</h4>
+            <p>Get started in just a few clicks!</p>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+            <img src="https://cdn-icons-png.flaticon.com/512/1157/1157109.png" alt="Icon">
+            <h4>Dynamic Rankings</h4>
+            <p>Stay updated with live leaderboard updates.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 SG Community & Leaderboard. All rights reserved.</p>
+        <div>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
+</html>

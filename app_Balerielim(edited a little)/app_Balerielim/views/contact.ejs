@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', sans-serif; background: #f0f4f8; margin: 0; }
+    header { background: linear-gradient(135deg, #007bff, #00c6ff); padding: 25px; text-align: center; color: white; }
+    nav a { color: #ffffffdd; margin: 0 15px; text-decoration: none; font-weight: 600; }
+    nav a:hover { color: #fff; }
+    .container { max-width: 900px; margin: 40px auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    h2 { text-align: center; margin-bottom: 20px; }
+    form label { display: block; margin-top: 10px; font-weight: bold; }
+    form input, form textarea { width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: 1px solid #ccc; }
+    form button { margin-top: 15px; padding: 12px 20px; border: none; background: #007bff; color: #fff; border-radius: 6px; cursor: pointer; }
+    form button:hover { background: #0056b3; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    th { background: #f7f7f7; }
+    .delete { color: red; text-decoration: none; }
+    .message { text-align: center; margin: 10px 0; font-weight: 600; }
+    .success { color: #2e7d32; }
+    .error { color: #d8000c; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Contact</h1>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/leaderboard">Leaderboard</a>
+    <% if (user && user.role === 'admin') { %>
+      <a href="/admin">Admin</a>
+      <a href="/contact/submissions">View Contacts</a>
+    <% } else if (user) { %>
+      <a href="/dashboard">Dashboard</a>
+    <% } else { %>
+      <a href="/login">Login</a>
+    <% } %>
+    <a href="/logout">Logout</a>
+  </nav>
+</header>
+
+<div class="container">
+  <!-- Flash Messages -->
+  <% if (errors && errors.length > 0) { %>
+    <% errors.forEach(err => { %>
+      <div class="message error"><%= err %></div>
+    <% }) %>
+  <% } %>
+
+  <% if (messages && messages.length > 0) { %>
+    <% messages.forEach(msg => { %>
+      <div class="message success"><%= msg %></div>
+    <% }) %>
+  <% } %>
+
+  <!-- USER: Contact Form -->
+  <% if (!user || user.role !== 'admin') { %>
+    <h2>Send us a message</h2>
+    <form method="POST" action="/contact">
+      <label>Name:</label>
+      <input type="text" name="name" required>
+
+      <label>Email:</label>
+      <input type="email" name="email" required>
+
+      <label>Subject:</label>
+      <input type="text" name="subject" required>
+
+      <label>Message:</label>
+      <textarea name="message" rows="5" required></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+  <% } %>
+
+  <!-- ADMIN: Submissions Table -->
+  <% if (user && user.role === 'admin') { %>
+    <h2>Contact Submissions</h2>
+    <form method="get" action="/contact/submissions">
+      <input type="text" name="search" placeholder="Search by name or subject" value="<%= search || '' %>">
+      <button type="submit">Search</button>
+    </form>
+
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Subject</th>
+        <th>Message</th>
+        <th>Actions</th>
+      </tr>
+      <% if (submissions && submissions.length > 0) { %>
+        <% submissions.forEach(row => { %>
+          <tr>
+            <td><%= row.id %></td>
+            <td><%= row.name %></td>
+            <td><%= row.email %></td>
+            <td><%= row.subject %></td>
+            <td><%= row.message %></td>
+            <td><a class="delete" href="/contact/delete/<%= row.id %>" onclick="return confirm('Delete this submission?');">Delete</a></td>
+          </tr>
+        <% }) %>
+      <% } else { %>
+        <tr><td colspan="6">No submissions found.</td></tr>
+      <% } %>
+    </table>
+  <% } %>
+</div>
+</body>
+</html>
+

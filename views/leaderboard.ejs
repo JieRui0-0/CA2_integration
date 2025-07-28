@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #007bff, #00c6ff);
+      padding: 25px 20px;
+      color: white;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      margin: 0 15px;
+      color: #ffffffdd;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #fff;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    form input, form button, form a {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    form button {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    form button:hover { background: #0056b3; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background: #f7f7f7;
+      color: #444;
+    }
+
+    tr:hover { background: #f1f7ff; }
+
+    .message { padding: 10px; border-radius: 5px; margin: 10px 0; text-align: center; }
+    .error { background: #ffe5e5; color: #d8000c; }
+    .success { background: #e6ffed; color: #2e7d32; }
+
+    .add-btn {
+      display: inline-block;
+      padding: 8px 14px;
+      background: #007bff;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-bottom: 15px;
+    }
+    .add-btn:hover { background: #0056b3; }
+
+    footer {
+      background: #e7f0ff;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 50px;
+    }
+
+    footer a {
+      margin: 0 10px;
+      color: #007acc;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #005c99;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Leaderboard</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/leaderboard">Leaderboard</a>
+      <% if (user && user.role === 'admin') { %>
+        <a href="/admin_bal">Admin</a>
+      <% } else if (user) { %>
+        <a href="/dashboard">Dashboard</a>
+      <% } else { %>
+        <a href="/login">Login</a>
+      <% } %>
+      <a href="/logout">Log out</a>
+    </nav>
+  </header>
+
+  <div class="container" data-aos="fade-up">
+    <form action="/leaderboard/search" method="get">
+      <input type="text" name="user_id" placeholder="Search by User ID">
+      <input type="number" name="min_points" placeholder="Min Points">
+      <input type="number" name="max_points" placeholder="Max Points">
+      <button type="submit">Search</button>
+      <a href="/leaderboard">Reset</a>
+    </form>
+
+    <% if (errors && errors.length > 0) { %>
+      <% errors.forEach(err => { %>
+        <div class="message error"><%= err %></div>
+      <% }) %>
+    <% } %>
+
+    <% if (messages && messages.length > 0) { %>
+      <% messages.forEach(msg => { %>
+        <div class="message success"><%= msg %></div>
+      <% }) %>
+    <% } %>
+
+    <% if (user && user.role === 'admin') { %>
+      <a href="/leaderboard/add" class="add-btn">➕ Add New Ranking</a>
+    <% } %>
+
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>User ID</th>
+        <th>Points</th>
+        <th>Achievements</th>
+        <th>Last Updated</th>
+        <% if (user && user.role === 'admin') { %>
+          <th>Actions</th>
+        <% } %>
+      </tr>
+      <% leaderboard.forEach(row => { %>
+        <tr>
+          <td><%= row.id %></td>
+          <td><%= row.user_id %></td>
+          <td><%= row.points %></td>
+          <td><%= row.achievements %></td>
+          <td><%= row.last_updated.toLocaleString() %></td>
+          <% if (user && user.role === 'admin') { %>
+            <td>
+              <a href="/leaderboard/edit/<%= row.id %>">✏️ Edit</a> |
+              <a href="/leaderboard/delete/<%= row.id %>" onclick="return confirm('Are you sure?');">🗑️ Delete</a>
+            </td>
+          <% } %>
+        </tr>
+      <% }) %>
+    </table>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 SG Community & Leaderboard. All rights reserved.</p>
+    <div>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
+</body>
+</html>

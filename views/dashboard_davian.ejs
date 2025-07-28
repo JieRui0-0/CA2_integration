@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Community Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    h1 { text-align: center; color: #007BFF; }
+    .post-list { max-width: 700px; margin: 20px auto; }
+    .post {
+      background: white;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .post h2 { margin-bottom: 10px; }
+    .post p { margin-bottom: 5px; }
+    .meta { font-size: 0.9em; color: #777; }
+    a.button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #007BFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    a.button:hover { background: #0056b3; }
+        body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+    }
+
+    header {
+      background: linear-gradient(135deg, #007bff, #00c6ff);
+      padding: 25px 20px;
+      color: white;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      margin: 0 15px;
+      color: #ffffffdd;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #fff;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    a {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 25px;
+      background: linear-gradient(135deg, #007bff, #00c6ff);
+      color: white;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    a:hover {
+      background: #0056b3;
+    }
+
+    footer {
+      background: #e7f0ff;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 50px;
+    }
+
+    footer a {
+      margin: 0 10px;
+      color: #007acc;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #005c99;
+    }
+
+    /* Dropdown Container */
+    .dropdown {
+      display: inline-block;
+      position: relative;
+    }
+
+    /* Dropdown Button */
+    .dropbtn {
+      background: none;
+      border: none;
+      color: #ffffffdd;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 8px 15px;
+      transition: color 0.3s ease;
+    }
+
+    .dropbtn:hover {
+      color: #fff;
+    }
+
+    /* Dropdown Content */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background: white;
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      z-index: 1000;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 10px 15px;
+      color: #333;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .dropdown-content a:hover {
+      background: #007bff;
+      color: white;
+    }
+
+    /* Show dropdown on hover */
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    nav a,
+    .dropbtn {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 25px;
+      background: linear-gradient(135deg, #007bff, #00c6ff);
+      color: white;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    nav a:hover,
+    .dropbtn:hover {
+      background: #0056b3;
+      color: #fff;
+    }
+
+    /* Dropdown Container */
+    .dropdown {
+      display: inline-block;
+      position: relative;
+    }
+
+    /* Dropdown Content */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 50px;
+      /* pushes below the button */
+      left: 0;
+      background: white;
+      min-width: 220px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      z-index: 1000;
+    }
+
+    /* Dropdown Links */
+    .dropdown-content a {
+      display: block;
+      padding: 12px 20px;
+      color: #333;
+      border-radius: 0;
+      background: none;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .dropdown-content a:hover {
+      background: #007bff;
+      color: white;
+    }
+
+    /* Show dropdown on hover */
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>Community Posts</h1>
+  <nav>
+      <a href="/">Home</a>
+      <a href="/leaderboard">Leaderboard</a>
+      <a href="/contact/submissions">View Contacts</a>
+
+      <div class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">More <i class="fas fa-caret-down"></i></a>
+        <div class="dropdown-content">
+          <a href="/admin">Opportunities & Announcements</a>
+          <a href="/rewards">Reward Badges</a>
+          <a href="/events">Community Events</a>
+          <a href="/feedback">Events Feedback</a>
+          <a href="/dashboard_dav">Community Posts</a>
+        </div>
+      </div>
+
+      <a href="/logout">Logout</a>
+    </nav>
+
+  <div class="post-list">
+    <% if (posts && posts.length > 0) { %>
+      <% posts.forEach(post => { %>
+        <div class="post">
+          <h2><a href="/post/<%= post.id %>"><%= post.title %></a></h2>
+          <p><%= post.content.substring(0, 100) %>...</p>
+          <p class="meta">Posted by <%= post.author %> on <%= post.created_at %></p>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>No posts available yet. Be the first to create one!</p>
+    <% } %>
+  </div>
+
+  <div style="text-align:center;">
+    <a class="button" href="/post">Create New Post</a>
+  </div>
+</body>
+</html>

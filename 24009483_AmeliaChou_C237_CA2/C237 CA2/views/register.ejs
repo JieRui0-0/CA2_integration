@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #f2f2f2, #e6e6e6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      width: 350px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="password"],
+    form input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .secondary-button {
+      margin-top: 10px;
+      background-color: #6c757d;
+    }
+
+    .secondary-button:hover {
+      background-color: #5a6268;
+    }
+
+    p {
+      text-align: center;
+    }
+
+    .message {
+      color: green;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .error {
+      color: red;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Register</h1>
+
+    <% if (errors && errors.length > 0) { %>
+      <% errors.forEach(err => { %>
+        <div class="error"><%= err %></div>
+      <% }) %>
+    <% } %>
+
+    <% if (messages && messages.length > 0) { %>
+      <% messages.forEach(msg => { %>
+        <div class="message"><%= msg %></div>
+      <% }) %>
+    <% } %>
+
+    <form method="POST" action="/register">
+      <label>Name:</label>
+      <input type="text" name="name" required>
+
+      <label>Username:</label>
+      <input type="text" name="Username" required>
+
+      <label>Email:</label>
+      <input type="email" name="email" required>
+
+      <label>Phone Number:</label>
+      <input type="tel" name="phone" required pattern="[0-9]{8,15}" title="Enter a valid phone number (8-15 digits)">
+
+      <label>Password:</label>
+      <input type="password" name="password" required>
+
+      <button type="submit">Register</button>
+    </form>
+
+    <p>Already registered? <a href="/login">Login</a></p>
+
+    <button class="secondary-button" onclick="location.href='/'">Back to Home Page</button>
+  </div>
+</body>
+</html>

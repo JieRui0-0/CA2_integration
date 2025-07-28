@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= post.title %></title>
+</head>
+<body>
+  <h1><%= post.title %></h1>
+  <p><%= post.content %></p>
+  <p><small>Posted by <%= post.author %> on <%= post.created_at %></small></p>
+
+  <% if (user && user.role === 'admin') { %>
+    <a href="/post/<%= post.id %>/edit">Edit</a>
+    <a href="/post/<%= post.id %>/delete">Delete</a>
+  <% } %>
+
+  <hr>
+  <h2>Comments</h2>
+  <ul>
+    <% if (comments && comments.length > 0) { %>
+      <% comments.forEach(function(comment) { %>
+        <li><strong><%= comment.user %>:</strong> <%= comment.text %></li>
+      <% }) %>
+    <% } else { %>
+      <li>No comments yet.</li>
+    <% } %>
+  </ul>
+
+  <hr>
+  <h3>Add a Comment</h3>
+  <form action="/post/<%= post.id %>/comment" method="POST">
+    <textarea name="text" placeholder="Your comment" required></textarea>
+    <br>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

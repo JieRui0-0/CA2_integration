@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SG Community & Leaderboard</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- AOS (Animate on Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f8;
+            color: #333;
+            line-height: 1.6;
+            height: 100vh;
+            /* full height for flexbox centering */
+        }
+
+        header {
+            background: linear-gradient(135deg, #007bff, #00c6ff);
+            padding: 25px 20px;
+            color: white;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: #ffffffdd;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #fff;
+        }
+
+        /* === Centered Content === */
+        .center-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: calc(100vh - 100px);
+            /* subtract header height */
+            text-align: center;
+        }
+
+        .btn-group-custom {
+            margin-top: 20px;
+        }
+
+        /* Optional: Adjust spacing */
+        h1,
+        p {
+            margin-bottom: 20px;
+        }
+
+        .progress-container {
+            position: relative;
+            width: 80%;
+            max-width: 400px;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            margin: 50px auto;
+            overflow: visible;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #4CAF50, #8BC34A);
+            width: 0%;
+            border-radius: 15px 0 0 15px;
+            /* rounded on left only */
+            transition: width 0.1s linear;
+        }
+
+        .character {
+            position: absolute;
+            top: -28px;
+            left: 0%;
+            font-size: 2rem;
+            animation: waddle 0.6s ease-in-out infinite;
+            user-select: none;
+            transition: left 0.1s linear;
+        }
+
+        @keyframes waddle {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to SG Community & Leaderboard</h1>
+    </header>
+
+    <!-- Main centered content -->
+    <div class="container center-content">
+        <h1>Your login was successful</h1>
+
+        <% if (user) { %>
+            <p>Hello, <%= user.username %> (<%= user.role %>)</p>
+
+            <div class="text-center mt-4">
+                <h3>Redirecting you in <span id="countdown">4</span> seconds...</h3>
+
+                <div class="progress-container mx-auto mt-3">
+                    <div class="progress-bar" id="progressBar"></div>
+                    <div class="character" id="character">🐧</div>
+                </div>
+            </div>
+
+            <div class="btn-group-custom">
+                <a href="/logout" class="btn btn-danger mx-2">Logout</a>
+            </div>
+            <% } %>
+    </div>
+    <script>
+        const totalDuration = 4000; // 4 seconds total
+        const progressBar = document.getElementById('progressBar');
+        const character = document.getElementById('character');
+        const countdownEl = document.getElementById('countdown');
+        const userRole = "<%= user.role %>"; // Pass role from EJS
+
+        let startTime = null;
+
+        function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / totalDuration, 1);
+            const percent = progress * 100;
+
+            progressBar.style.width = percent + '%';
+            character.style.left = `calc(${percent}% - 20px)`;
+
+            const secondsLeft = Math.ceil((totalDuration - elapsed) / 1000);
+            countdownEl.textContent = secondsLeft > 0 ? secondsLeft : 0;
+
+            if (elapsed < totalDuration) {
+                requestAnimationFrame(step);
+            } else {
+                // Force redirect when time is up
+                if (userRole === "admin") {
+                    window.location.href = "/admin_bal";
+                } else {
+                    window.location.href = "/dashboard";
+                }
+            }
+        }
+
+        requestAnimationFrame(step);
+    </script>
+
+
+
+</body>
+
+</html>

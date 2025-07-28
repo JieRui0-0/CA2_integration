@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <title>SG App</title>
+
+  <style>
+  .custom-navbar {
+    background-color: #ff0000; /* Bright red */
+  }
+  .custom-navbar .nav-link {
+    color: white !important;
+  }
+  .custom-navbar .navbar-brand {
+    color: white !important;
+  }
+  *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f8;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #007bff, #00c6ff);
+            padding: 25px 20px;
+            color: white;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: #ffffffdd;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #fff;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+            position: relative;
+            background: url('https://www.transparenttextures.com/patterns/white-wall-3.png');
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #007acc;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: white;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .search-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .search-container input[type="search"] {
+            padding: 12px 18px;
+            border: 2px solid #007acc;
+            border-radius: 30px;
+            font-size: 1rem;
+            width: 280px;
+        }
+
+        .search-container button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(to right, #1e90ff, #00c6ff);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .buttons {
+            margin-top: 30px;
+        }
+
+        .btn {
+            margin: 10px 15px;
+            padding: 14px 30px;
+            border-radius: 30px;
+            background: linear-gradient(to right, #cc0000, #ff2200);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 5px 10px rgba(0, 122, 204, 0.3);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .stats {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .stats h3 {
+            font-size: 1.4rem;
+            color: #222;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 60px 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            width: 280px;
+            text-align: center;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 60px;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            background: #e7f0ff;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        footer a {
+            margin: 0 10px;
+            color: #007acc;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #005c99;
+        }
+
+        @media (max-width: 600px) {
+            .cards {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+</style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-sm custom-navbar">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">SG App</a>
+      <img src="/images/Logo.png" alt="Logo" style="width:40px;" class="rounded-pill">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/addopportunities">Add Opportunities</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">Update opportunities</h2>
+    
+    <% if (opportunities) { %>
+      <form action="/updateopportunities/<%= opportunities.opportunitiesId %>" method="POST" enctype="multipart/form-data" class="mx-auto" style="max-width: 500px;">
+        
+        <div class="mb-3">
+        <label for="opportunitiesName" class="form-label">Opportunities Name</label>
+        <input type="text" class="form-control" id="opportunitiesName" name="opportunitiesName" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="organization" class="form-label">Organization</label>
+        <input type="text" class="form-control" id="organization" name="organization" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="data" class="form-label">Date</label>
+        <input type="date" class="form-control" id="date" name="date" min="0" step="1" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" class="form-control" id="location" name="location" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="contact_email" class="form-label">Contact Email</label>
+        <input type="text" class="form-control" id="contact_email" name="contact_email" required>
+      </div>
+
+      
+        <div class="mb-3">
+          <label class="form-label">Current Image</label>
+          <input type="text" class="form-control" name="currentImage" value="<%= opportunities.image %>" readonly>
+          <img src="/images/<%= opportunities.image %>" class="img-thumbnail mt-2" style="width: 150px;">
+        </div>
+
+        <div class="mb-4">
+          <label for="image" class="form-label">Upload New Image</label>
+          <input class="form-control" type="file" id="image" name="image" accept="image/*">
+        </div>
+
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-primary">Update Opportunities</button>
+          <a href="/admin" class="btn btn-secondary">Back to Admin Page</a>
+        </div>
+      </form>
+    <% } else { %>
+      <p class="text-center">No opportunities found.</p>
+    <% } %>
+  </div>
+   <footer>
+        <p>&copy; 2025 SG Community & Leaderboard. All rights reserved.</p>
+        <div>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>

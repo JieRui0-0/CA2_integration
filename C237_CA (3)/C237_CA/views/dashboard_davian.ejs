@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Community Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    h1 { text-align: center; color: #007BFF; }
+    .post-list { max-width: 700px; margin: 20px auto; }
+    .post {
+      background: white;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .post h2 { margin-bottom: 10px; }
+    .post p { margin-bottom: 5px; }
+    .meta { font-size: 0.9em; color: #777; }
+    a.button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #007BFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    a.button:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+  <h1>Community Posts</h1>
+
+  <div class="post-list">
+    <% if (posts && posts.length > 0) { %>
+      <% posts.forEach(post => { %>
+        <div class="post">
+          <h2><a href="/post/<%= post.id %>"><%= post.title %></a></h2>
+          <p><%= post.content.substring(0, 100) %>...</p>
+          <p class="meta">Posted by <%= post.author %> on <%= post.created_at %></p>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>No posts available yet. Be the first to create one!</p>
+    <% } %>
+  </div>
+
+  <div style="text-align:center;">
+    <a class="button" href="/post">Create New Post</a>
+  </div>
+</body>
+</html>

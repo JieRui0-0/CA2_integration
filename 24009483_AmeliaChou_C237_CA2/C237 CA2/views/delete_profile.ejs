@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Delete User Profile</title>
+  <link rel="stylesheet" href="/styles.css"> <!-- Optional CSS -->
+</head>
+<body>
+  <h1>Delete User Profile</h1>
+
+  <p>Are you sure you want to delete the following profile?</p>
+
+  <ul>
+    <li><strong>Name:</strong> <%= profile.name %></li>
+    <li><strong>Email:</strong> <%= profile.email %></li>
+    <li><strong>Interests:</strong> <%= profile.interests %></li>
+    <li><strong>Contribution Points:</strong> <%= profile.contribution_points %></li>
+    <li><strong>Profile Picture:</strong>
+      <% if (profile.profile_pic) { %>
+        <img src="<%= profile.profile_pic %>" alt="Profile Pic" width="50">
+      <% } else { %>
+        N/A
+      <% } %>
+    </li>
+  </ul>
+
+  <form method="POST" action="/api/user-profiles/<%= profile.id %>?_method=DELETE">
+    <button type="submit" style="color: red;">Yes, Delete</button>
+    <a href="/api/user-profiles">Cancel</a>
+  </form>
+</body>
+</html>
