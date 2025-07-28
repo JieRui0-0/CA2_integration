@@ -1086,7 +1086,7 @@ app.get('/feedback', checkAuthenticated, checkAdmin, (req, res) => {
         if (err) {
             console.error("MySQL error on feedback list:", err);
             req.flash('error', 'Failed to load feedback list');
-            return res.redirect('/');
+            return res.redirect('/admin_bal');
         }
         res.render('feedback', {
             user: req.session.user,
