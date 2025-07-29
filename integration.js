@@ -1089,7 +1089,7 @@ app.get('/feedback', checkAuthenticated, (req, res) => {
             if (req.session.user && req.session.user.role === 'admin') {
                 return res.redirect('/admin_bal');
             } else {
-                return res.redirect('/dashboard_bal'); // your user dashboard route
+                return res.redirect('/dashboard'); // your user dashboard route
             }
         }
         res.render('feedback', {
