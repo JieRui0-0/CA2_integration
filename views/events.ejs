@@ -54,7 +54,11 @@
             </div>
         <% } %>
         <div class="text-center mt-4">
-            <a href="/admin_bal" class="btn btn-success">Back to dashboard</a>
+            <% if (user && user.role === 'admin') { %>
+                <a href="/admin_bal" class="btn btn-success">Back to Admin</a>
+            <% } else { %>
+                <a href="/dashboard" class="btn btn-primary">Back to Dashboard</a>
+            <% } %>
         </div>
     </div>
 </body>
