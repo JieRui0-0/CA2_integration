@@ -354,18 +354,18 @@ app.get('/deleteSuggestion/:id', checkAuthenticated, checkAdmin, (req, res) => {
         res.redirect('/suggestion');
     });
 });
-// app.post('/deleteSuggestion/:id', checkAuthenticated, checkAdmin, (req, res) => {
-//     const suggestionId = req.params.id;
-//     db.query('DELETE FROM reward_suggestion WHERE suggestionId = ?', [suggestionId], (err) => {
-//         if (err) {
-//             console.error(err);
-//             req.flash('error', 'Failed to delete suggestion.');
-//         } else {
-//             req.flash('success', 'Suggestion deleted successfully.');
-//         }
-//         res.redirect('/suggestion');
-//     });
-// });
+app.post('/deleteSuggestion/:id', checkAuthenticated, checkAdmin, (req, res) => {
+    const suggestionId = req.params.id;
+    db.query('DELETE FROM reward_suggestion WHERE suggestionId = ?', [suggestionId], (err) => {
+        if (err) {
+            console.error(err);
+            req.flash('error', 'Failed to delete suggestion.');
+        } else {
+            req.flash('success', 'Suggestion deleted successfully.');
+        }
+        res.redirect('/suggestion');
+    });
+});
 
 
 // Adi section //
