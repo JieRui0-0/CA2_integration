@@ -242,10 +242,10 @@ app.get('/suggestion', checkAuthenticated, (req, res) => {
       (err, results) => {
           if (err) {
               console.error('SQL Select Error:', err);
-              return res.render('Suggestion', { suggestion: [], user, messages: ['Error loading suggestions.'] });
+              return res.render('Suggestion', { reward_suggestion: [], user, messages: ['Error loading suggestions.'] });
           }
           res.render('Suggestion', { 
-              suggestion: results, 
+              reward_suggestion: results, 
               user, 
               messages: req.flash('success') 
           });
