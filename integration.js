@@ -245,7 +245,7 @@ app.get('/suggestion', checkAuthenticated, (req, res) => {
               return res.render('Suggestion', { suggestion: [], user, messages: ['Error loading suggestions.'] });
           }
           res.render('Suggestion', { 
-              reward_suggestion: results, 
+              suggestion: results, 
               user, 
               messages: req.flash('success') 
           });
