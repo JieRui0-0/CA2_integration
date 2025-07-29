@@ -48,6 +48,19 @@
             </button>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"></li>
+                <div class="text-center mt-4">
+                    <% if (user && user.role==='admin' ) { %>
+                        <a href="/admin_bal" class="nav-link d-flex align-items-center">
+                            <i class="fas fa-house fa-lg" style="position: relative; top: 1px;"></i>
+                            <span class="ms-2"> </span>
+                        </a>
+                    <% } else { %>
+                        <a href="/dashboard" class="nav-link d-flex align-items-center">
+                            <i class="fas fa-house fa-lg" style="position: relative; top: 1px;"></i>
+                            <span class="ms-2"> </span>
+                        </a>
+                    <% } %>
+                </div>
                 <a href="/admin_bal" class="nav-link d-flex align-items-center">
                     <i class="fas fa-house fa-lg" style="position: relative; top: 1px;"></i>
                     <span class="ms-2"> </span>
