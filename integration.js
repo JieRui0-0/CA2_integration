@@ -235,22 +235,15 @@ app.get('/addRewards', checkAuthenticated, checkAdmin, (req, res) => {
 });
 
 app.get('/suggestion', checkAuthenticated, (req, res) => {
-    const user = req.session.user;
-    db.query(
-      'SELECT * FROM reward_suggestion WHERE username = ? ORDER BY created_at DESC',
-      [user.username],
-      (err, results) => {
-          if (err) {
-              console.error('SQL Select Error:', err);
-              return res.render('Suggestion', { reward_suggestion: [], user: user, messages: ['Error loading suggestions.'] });
-          }
-          res.render('Suggestion', { 
-              reward_suggestion: results, 
-              user: user, 
-              messages: req.flash('success') 
-          });
-      }
-    );
+    const user = req.session.user
+    db.query('SELECT * FROM reward_suggestion ORDER BY created_at DESC', (err, results) => {
+        if (err) {
+            console.error('Error fetching suggestions:', err);
+            req.flash('error', 'Unable to load suggestions.');
+            return res.redirect('/rewards');
+        }
+        res.render('suggestion', { reward_suggestion: results, user: user, messages: req.flash() });
+    });
 });
 
 
