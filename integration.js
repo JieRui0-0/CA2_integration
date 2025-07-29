@@ -312,7 +312,7 @@ app.get('/deleteReward/:id', checkAuthenticated, checkAdmin, (req, res) => {
 app.post('/suggestion', checkAuthenticated, upload.single('image'), (req, res) => {
     const { reward_name, description, criteria } = req.body;
     const username = req.session.user.username; 
-    const create_at = new Date().toISOString().slice(0, 19).replace('T', ' '); // MySQL datetime format
+    const created_at = new Date().toISOString().slice(0, 19).replace('T', ' '); // MySQL datetime format
     let image;
     if (req.file) {
         image = req.file.filename; // Save only the filename
@@ -321,8 +321,8 @@ app.post('/suggestion', checkAuthenticated, upload.single('image'), (req, res) =
     }
 
     db.query(
-        'INSERT INTO reward_suggestion (username, reward_name, description, criteria, image, create_at) VALUES (?, ?, ?, ?, ?, ?)',
-        [username, reward_name, description, criteria, image, create_at],
+        'INSERT INTO reward_suggestion (username, reward_name, description, criteria, image, created_at) VALUES (?, ?, ?, ?, ?, ?)',
+        [username, reward_name, description, criteria, image, created_at],
         (err) => {
             if (err) {
                 console.error(err);
