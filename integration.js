@@ -890,7 +890,7 @@ app.post('/contact', checkAuthenticated, (req, res) => {
 });
 
 // Admin: View/Search Submissions
-app.get('/contact/submissions', checkAuthenticated, checkAdmin, (req, res) => {
+app.get('/contact/submissions', checkAuthenticated, (req, res) => {
     const search = req.query.search || '';
 
     let query = 'SELECT * FROM contact_submissions';
