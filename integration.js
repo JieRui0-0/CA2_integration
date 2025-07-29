@@ -237,7 +237,7 @@ app.get('/addRewards', checkAuthenticated, checkAdmin, (req, res) => {
 app.get('/suggestion', checkAuthenticated, (req, res) => {
     const user = req.session.user;
     db.query(
-      'SELECT * FROM reward_suggestion WHERE username = ? ORDER BY create_at DESC',
+      'SELECT * FROM reward_suggestion WHERE username = ? ORDER BY created_at DESC',
       [user.username],
       (err, results) => {
           if (err) {
