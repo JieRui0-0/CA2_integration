@@ -371,7 +371,7 @@ app.get('/deleteSuggestion/:id', checkAuthenticated, checkAdmin, (req, res) => {
 // Adi section //
 
 
-app.get('/sg__volunteer_opportunities', (req, res) => {
+app.get('/sg__volunteer_opportunities', checkAuthenticated, (req, res) => {
     const sql = 'SELECT * FROM opportunities';
     //Fetch data from MySQL
     db.query(sql, (error, results) => {
