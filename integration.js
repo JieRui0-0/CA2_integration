@@ -1067,7 +1067,7 @@ app.get('/events/delete/:id', checkAuthenticated, checkAdmin, (req, res) => {
 });
 
 /* FEEDBACK ROUTES */
-app.get('/feedback', checkAuthenticated, checkAdmin, (req, res) => {
+app.get('/feedback', checkAuthenticated, (req, res) => {
     const search = req.query.search;
     let sql = `
         SELECT f.id, f.attendee_name, f.rating, f.comments, e.name AS event_name
