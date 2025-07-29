@@ -312,7 +312,9 @@ app.get('/deleteReward/:id', checkAuthenticated, checkAdmin, (req, res) => {
 app.post('/suggestion', checkAuthenticated, upload.single('image'), (req, res) => {
     const { reward_name, description, criteria } = req.body;
     const username = req.session.user.username; 
-    const created_at = new Date().toISOString().slice(0, 19).replace('T', ' '); // MySQL datetime format
+    const now = new Date();
+    const sgTime = new Date(now.getTime() + (8 * 60 * 60 * 1000)); // add 8 hours
+    const created_at = sgTime.toISOString().slice(0, 19).replace('T', ' ');
     let image;
     if (req.file) {
         image = req.file.filename; // Save only the filename
