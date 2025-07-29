@@ -203,7 +203,7 @@
 <body>
   <nav class="navbar navbar-expand-sm custom-navbar">
     <div class="container-fluid">
-      <% if (user ==='admin' ) { %>
+      <% if (user && user.role==='admin' ) { %>
         <a class="navbar-brand" href="/admin_bal">SG App</a>
       <% } else { %>
         <a class="navbar-brand" href="/dashboard">SG App</a>
